@@ -1,1 +1,4 @@
-console.log("welcome api gateway ");
+import startServer from '#root/server/startServer'
+
+
+startServer()
