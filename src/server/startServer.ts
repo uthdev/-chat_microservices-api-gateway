@@ -7,9 +7,11 @@ import cors from 'cors';
 import 'reflect-metadata';
 // import { buildSchema } from 'type-graphql';
 
-import formatGraphQLErrors from './formatGraphQLErrors';
 import schema from '#root/graphql/schema';
 import resolvers from '#root/graphql/resolvers';
+
+import formatGraphQLErrors from './formatGraphQLErrors';
+import injectSession from './middleware/injectSession';
 
 const PORT = config.get<number>("PORT");
 
@@ -36,7 +38,9 @@ const startServer = async () => {
   app.use(cors({
     credentials: true,
     origin: (origin, cb) => cb(null, true)
-  }))
+  }));
+
+  app.use(injectSession)
 
   await apolloServer.start()
 
