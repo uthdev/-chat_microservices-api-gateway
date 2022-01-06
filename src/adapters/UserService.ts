@@ -28,4 +28,14 @@ export default class UsersService {
     if(!body) return null;
     return <UserSession>body;
   }
+
+  static async createUser({ username, password}: { password: string, username: string}) {
+    const body = await got.post(`${USERS_SERVICE_URI}/users`, { json: { password, username }}).json()
+    return body;
+  }
+
+  static async createUserSession({ username, password}: { password: string, username: string}): Promise<UserSession> {
+    const body = <UserSession>await got.post(`${USERS_SERVICE_URI}/sessions`, { json: { password, username }}).json()
+    return body;
+  }
 } 
