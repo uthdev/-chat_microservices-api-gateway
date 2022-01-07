@@ -5,8 +5,14 @@ interface Args {
   password: string;
 }
 
-const createUserResolver =  async (obj:any, { password, username}: Args) => {
-  return await UsersService.createUser({ password, username })
+const createUserResolver =  async (obj:any, { password, username}: Args): Promise<{ user: Args, status: string | number}> => {
+  try {
+    const user =  await UsersService.createUser({ password, username })
+
+    return user;
+  } catch (error) {
+    throw new Error("Unsuccessful")
+  }
 }
 
 export default createUserResolver;
